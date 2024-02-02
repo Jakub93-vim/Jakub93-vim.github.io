@@ -1,1 +1,39 @@
-Hello
+// HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPS Location</title>
+</head>
+<body>
+  <h1>GPS Location</h1>
+  <button id="getLocationBtn">Get Location</button>
+  <p id="locationDisplay"></p>
+
+  <script src="app.ts"></script>
+</body>
+</html>
+
+// TypeScript (app.ts)
+document.addEventListener('DOMContentLoaded', () => {
+  const getLocationBtn = document.getElementById('getLocationBtn')!;
+  const locationDisplay = document.getElementById('locationDisplay')!;
+
+  getLocationBtn.addEventListener('click', () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          locationDisplay.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+        },
+        (error) => {
+          locationDisplay.textContent = `Error: ${error.message}`;
+        }
+      );
+    } else {
+      locationDisplay.textContent = 'Geolocation is not supported by this browser.';
+    }
+  });
+});
